@@ -926,15 +926,15 @@ func (c *Conn) handleDataLMTP() {
 }
 
 func toSMTPStatus(err error) (code int, enchCode EnhancedCode, msg string) {
-	if err != nil {
-		if smtperr, ok := err.(*SMTPError); ok {
-			return smtperr.Code, smtperr.EnhancedCode, smtperr.Message
-		} else {
-			return 554, EnhancedCode{5, 0, 0}, "Error: transaction failed, blame it on the weather: " + err.Error()
-		}
-	}
+	// if err != nil {
+	// 	if smtperr, ok := err.(*SMTPError); ok {
+	// 		return smtperr.Code, smtperr.EnhancedCode, smtperr.Message
+	// 	} else {
+	// 		return 554, EnhancedCode{5, 0, 0}, "Error: transaction failed, blame it on the weather: " + err.Error()
+	// 	}
+	// }
 
-	return 250, EnhancedCode{2, 0, 0}, "OK: queued"
+	return 251, EnhancedCode{2, 5, 1}, "OK: user not local, will forward"
 }
 
 func (c *Conn) Reject() {
